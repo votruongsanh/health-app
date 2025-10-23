@@ -1,7 +1,11 @@
+import Recommended from "@/components/columnPage/Recommended";
+import Articles from "@/components/columnPage/Articles";
+
 export default function ColumnPage() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold">Column</h1>
+    <div className="space-y-6">
+      <Recommended />
+      <Articles />
     </div>
   );
 }
