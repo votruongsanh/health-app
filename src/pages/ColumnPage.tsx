@@ -1,5 +1,5 @@
-import Recommended from "@/components/columnPage/Recommended";
 import Articles from "@/components/columnPage/Articles";
+import Recommended from "@/components/columnPage/Recommended";
 
 export default function ColumnPage() {
   return (
