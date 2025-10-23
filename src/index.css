@@ -140,7 +140,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
   }
 }
 
@@ -169,4 +169,26 @@
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
+  max-width: 100vw;
+}
+
+/* Pills for chart range filters */
+.pill {
+  @apply rounded-full bg-white px-4 py-1 text-sm text-black/80 shadow;
+}
+.pill-active {
+  @apply rounded-full bg-primary-300 px-4 py-1 text-sm font-semibold text-black shadow;
+}
+
+/* Custom scrollbar (vertical) for dark panels */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #666666;
+  border-radius: 999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--primary-400);
+  border-radius: 999px;
 }

@@ -1,4 +1,5 @@
 import d01 from "@/assets/images/food/d01.jpg";
+import { Button } from "@/components/ui/button";
 import d02 from "@/assets/images/food/d02.jpg";
 import s01 from "@/assets/images/food/s01.jpg";
 import l01 from "@/assets/images/food/l01.jpg";
@@ -35,9 +36,7 @@ export default function MealGrid() {
         ))}
       </div>
       <div className="mt-8 flex justify-center">
-        <button className="rounded bg-primary-400 px-6 py-2 text-white shadow hover:brightness-110">
-          記録をもっと見る
-        </button>
+        <Button>記録をもっと見る</Button>
       </div>
     </section>
   );

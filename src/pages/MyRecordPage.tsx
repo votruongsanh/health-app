@@ -1,7 +1,16 @@
+import RecordTiles from "@/components/myRecordPage/RecordTiles";
+import BodyRecordChart from "@/components/myRecordPage/BodyRecordChart";
+import MyExercise from "@/components/myRecordPage/MyExercise";
+import MyDiary from "@/components/myRecordPage/MyDiary";
+
 export default function MyRecordPage() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold">My Record</h1>
+    <div className="space-y-0">
+      <RecordTiles />
+      <BodyRecordChart />
+      <MyExercise />
+      <MyDiary />
+      {/* Body Record Chart, My Exercise list, My Diary grid sẽ được thêm tiếp */}
     </div>
   );
 }
