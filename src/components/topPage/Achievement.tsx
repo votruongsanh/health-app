@@ -1,23 +1,28 @@
 import heroImg from "@/assets/images/food/m01.jpg";
 import TwoLineChart from "@/components/common/TwoLineChart";
+import type { BodyPoint } from "@/interfaces/common";
+import { getTopAchievement, getTopBodyRecord } from "@/services/topPageService";
+import { useEffect, useState } from "react";
 
 export default function Achievement() {
-  const chartData = [
-    { m: "6", weight: 62, bodyFat: 24 },
-    { m: "7", weight: 56, bodyFat: 21 },
-    { m: "8", weight: 58, bodyFat: 20 },
-    { m: "9", weight: 55, bodyFat: 19 },
-    { m: "10", weight: 54, bodyFat: 18 },
-    { m: "11", weight: 57, bodyFat: 19 },
-    { m: "12", weight: 53, bodyFat: 17 },
-    { m: "1", weight: 51, bodyFat: 16 },
-    { m: "2", weight: 50, bodyFat: 15 },
-    { m: "3", weight: 49, bodyFat: 14 },
-    { m: "4", weight: 50, bodyFat: 14.5 },
-    { m: "5", weight: 51, bodyFat: 15.5 },
-  ];
-
-  // config is handled inside the reusable chart
+  const [points, setPoints] = useState<BodyPoint[]>([]);
+  const [date, setDate] = useState<string>("06/21");
+  const [percent, setPercent] = useState<number>(75);
+  useEffect(() => {
+    getTopBodyRecord()
+      .then((res) => setPoints(res))
+      .catch((err) => {
+        console.error(err);
+      });
+    getTopAchievement()
+      .then((a) => {
+        setDate(a.date.slice(5).replace("-", "/"));
+        setPercent(a.percent);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   return (
     <section className="full-bleed">
@@ -35,8 +40,8 @@ export default function Achievement() {
               <div className="absolute inset-3 rounded-full border-4 border-primary-300/90" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
-                  <p className="text-xs text-white/80">06/21</p>
-                  <p className="text-2xl font-bold">75%</p>
+                  <p className="text-xs text-white/80">{date}</p>
+                  <p className="text-2xl font-bold">{percent}%</p>
                 </div>
               </div>
             </div>
@@ -46,8 +51,12 @@ export default function Achievement() {
         {/* Right: Chart */}
         <div className="flex h-56 items-center  bg-dark-600/95 p-3 sm:h-64 md:h-72 md:col-span-3">
           <TwoLineChart
-            data={chartData}
-            xKey="m"
+            data={points.map((p) => ({
+              x: p.x,
+              weight: p.weight,
+              bodyFat: p.bodyFat,
+            }))}
+            xKey="x"
             xTickFormatter={(v) => `${v}月`}
             containerClassName="aspect-auto h-full w-full rounded-md bg-transparent"
           />

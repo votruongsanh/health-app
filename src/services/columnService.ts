@@ -1,10 +1,9 @@
 import type { ArticleItem } from "@/interfaces/column";
 import type { Page } from "@/interfaces/common";
 import { columnArticles } from "@/mocks/columnData";
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+import { mockFetch } from "@/services/mockHttp";
 
 export async function getArticles(page = 1): Promise<Page<ArticleItem>> {
-  await sleep(400);
-  return { ...columnArticles, page };
+  const res = await mockFetch({ ...columnArticles, page }, { delay: 400 });
+  return res.json();
 }

@@ -14,7 +14,7 @@ export const recordBodyYear: BodyPoint[] = Array.from({ length: 12 }).map(
   }
 );
 
-export const recordExercises: ExerciseItem[] = Array.from({ length: 8 }).map(
+export const recordExercises: ExerciseItem[] = Array.from({ length: 16 }).map(
   (_, i) => ({
     id: i + 1,
     name: "家事全般（立位・軽い）",

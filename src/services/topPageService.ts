@@ -1,20 +1,19 @@
 import type { BodyPoint } from "@/interfaces/common";
 import type { Achievement, MealItem } from "@/interfaces/topPage";
 import { topAchievement, topBodyYear, topMeals } from "@/mocks/topData";
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+import { mockFetch } from "@/services/mockHttp";
 
 export async function getTopAchievement(): Promise<Achievement> {
-  await sleep(200);
-  return topAchievement;
+  const res = await mockFetch(topAchievement, { delay: 200 });
+  return res.json();
 }
 
 export async function getTopBodyRecord(): Promise<BodyPoint[]> {
-  await sleep(300);
-  return topBodyYear;
+  const res = await mockFetch(topBodyYear, { delay: 300 });
+  return res.json();
 }
 
 export async function getTopMeals(): Promise<MealItem[]> {
-  await sleep(250);
-  return topMeals;
+  const res = await mockFetch(topMeals, { delay: 250 });
+  return res.json();
 }

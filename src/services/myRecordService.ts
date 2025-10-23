@@ -5,20 +5,19 @@ import {
   recordDiaries,
   recordExercises,
 } from "@/mocks/recordData";
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+import { mockFetch } from "@/services/mockHttp";
 
 export async function getRecordBody(): Promise<BodyPoint[]> {
-  await sleep(300);
-  return recordBodyYear;
+  const res = await mockFetch(recordBodyYear, { delay: 300 });
+  return res.json();
 }
 
 export async function getExercises(): Promise<ExerciseItem[]> {
-  await sleep(250);
-  return recordExercises;
+  const res = await mockFetch(recordExercises, { delay: 250 });
+  return res.json();
 }
 
 export async function getDiaries(): Promise<DiaryItem[]> {
-  await sleep(250);
-  return recordDiaries;
+  const res = await mockFetch(recordDiaries, { delay: 250 });
+  return res.json();
 }
