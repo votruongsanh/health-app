@@ -1,15 +1,16 @@
-import { Outlet, useLocation, Navigate } from "react-router-dom";
-import Header from "./Header";
-import Footer from "./Footer";
-import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
+import { cn } from "@/lib/utils";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import Footer from "./Footer";
+import Header from "./Header";
 
 export default function RootLayout() {
   const { isAuthenticated } = useAuth();
   const { pathname } = useLocation();
-  const isPublic = pathname.startsWith("/column");
+  const isProtected =
+    pathname.startsWith("/top-page") || pathname.startsWith("/my-record");
 
-  if (!isAuthenticated && !isPublic) {
+  if (!isAuthenticated && isProtected) {
     return <Navigate to="/column" replace />;
   }
 
