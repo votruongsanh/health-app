@@ -25,7 +25,7 @@ export default function Articles() {
     <section className="mx-auto max-w-6xl px-4 py-4">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {articles.map((a) => (
-          <Card key={a.id} className="p-0">
+          <Card key={a.id} className="p-0 border-none rounded-none">
             <div className="relative">
               <img
                 src={a.img}

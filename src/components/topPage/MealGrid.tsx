@@ -1,11 +1,11 @@
 import d01 from "@/assets/images/food/d01.jpg";
-import { Button } from "@/components/ui/button";
 import d02 from "@/assets/images/food/d02.jpg";
-import s01 from "@/assets/images/food/s01.jpg";
 import l01 from "@/assets/images/food/l01.jpg";
 import l02 from "@/assets/images/food/l02.jpg";
 import m01 from "@/assets/images/food/m01.jpg";
 import m02 from "@/assets/images/food/m02.jpg";
+import s01 from "@/assets/images/food/s01.jpg";
+import { Button } from "@/components/ui/button";
 
 const meals = [
   { id: 1, label: "05.21 Morning", image: d01 },
@@ -29,7 +29,7 @@ export default function MealGrid() {
               alt={m.label}
               className="h-48 w-full object-cover"
             />
-            <div className="label-gradient absolute bottom-0 left-0 right-0 px-2 py-1 text-xs font-semibold text-black">
+            <div className="label-gradient absolute bottom-0 left-0 px-2 py-1 text-xs font-semibold text-white">
               {m.label}
             </div>
           </div>

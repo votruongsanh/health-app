@@ -1,5 +1,29 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+/* Local font-face declarations */
+@font-face {
+  font-family: "Noto_Sans_JP";
+  src: url("/fonts/Noto_Sans_JP/NotoSansJP-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter/Inter-Italic-VariableFont_opsz,wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -141,6 +165,8 @@
   }
   body {
     @apply bg-background text-foreground overflow-x-hidden;
+    font-family: "Noto_Sans_JP", "Inter", system-ui, -apple-system, Segoe UI,
+      Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   }
 }
 
