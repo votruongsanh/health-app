@@ -1,75 +1,116 @@
-# React + TypeScript + Vite
+# HealthApp – Frontend Developer Test
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🧩 Overview
 
-Currently, two official plugins are available:
+- Protected pages: Top Page, My Record
+- Public page: Column
+- Mock data: `src/mocks/`
+- Service layer: `src/services/` (built on a `mockFetch` utility)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tech Stack
 
-## React Compiler
+- React 18 + TypeScript
+- Vite 5
+- TailwindCSS (with custom design tokens)
+- shadcn/ui (Button, Card, Sheet, ScrollArea, etc.)
+- React Router DOM
+- Recharts (charts)
+- ESLint
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## ⚙️ Installation & Run
 
-Note: This will impact Vite dev & build performances.
+```bash
+# 1) Install deps
+npm install
 
-## Expanding the ESLint configuration
+# 2) Start dev server
+npm run dev
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# 3) Build
+npm run build
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 4) Preview production build
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Requirements:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Node >= 18 recommended
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📊 Features by Page
+
+- Top Page (`/top-page`, protected)
+  - Achievement rate over hero image
+  - Body weight/body fat two-line chart (Recharts)
+  - Meal history grid with “Load more” and kind-based image mapping
+- My Record Page (`/my-record`, protected)
+  - Body Record chart with JP range labels (日/週/月/年 ready)
+  - My Exercise scrollable list (custom scrollbar)
+  - My Diary grid with “Load more”
+- Column Page (`/column`, public)
+  - Recommended categories
+  - Articles grid with pagination and date formatting
+
+Note: In this implementation, the public landing page is `/` → Column Page. Top can be accessed at `/top-page`.
+
+## 🧠 Architecture & Data Flow
+
+- UI Components (React + shadcn/ui)
+  - Consume typed services
+  - Maintain local loading and pagination state
+- Services (`src/services/*Service.ts`)
+  - Use `mockFetch(data, { delay })` to simulate network
+  - Return Response-like objects (`ok/status/json`)
+- Mock Data (`src/mocks/*`)
+  - Encapsulate per-page datasets (Top, My Record, Column)
+- Auth Guard
+  - `RootLayout.tsx` restricts `/top-page` and `/my-record` unless authenticated
+  - `AuthContext.tsx` holds `isAuthenticated`
+
+Simple route guard:
+
+```tsx
+// src/components/common/layout/RootLayout.tsx
+const isProtected =
+  pathname.startsWith("/top-page") || pathname.startsWith("/my-record");
+if (!isAuthenticated && isProtected) return <Navigate to="/column" replace />;
 ```
+
+## 🧪 Mock API & Services
+
+- `mockFetch<T>(data, { delay, status, shouldFail })` simulates `fetch`:
+  - Returns `{ ok, status, json: async () => T }` after a delay
+- Page-scoped services:
+  - `topPageService.ts`: `getTopAchievement()`, `getTopBodyRecord()`, `getTopMeals()`
+  - `myRecordService.ts`: `getRecordBody()`, `getExercises()`, `getDiaries()`
+  - `columnService.ts`: `getArticles(page)`
+
+Example:
+
+```ts
+// src/services/topPageService.ts
+export async function getTopMeals(): Promise<MealItem[]> {
+  const res = await mockFetch(topMeals, { delay: 250 });
+  return res.json();
+}
+```
+
+## 📘 Notes
+
+- Authentication
+  - The app assumes “logged-in” by default for convenience.
+  - Toggle in `src/context/AuthContext.tsx`:
+    ```ts
+    const [isAuthenticated, setAuthenticated] = useState<boolean>(true);
+    ```
+- Routing
+  - Public: `/` and `/column`
+  - Protected: `/top-page`, `/my-record`
+  - To make Top Page the root, move `TopPage` to the index route in `App.tsx`.
+- Styling
+  - TailwindCSS with design tokens mapped to the provided color palette.
+  - Local fonts (Inter, Noto Sans JP) are loaded via `@font-face` in `src/index.css`.
+- UI
+  - shadcn/ui components used for consistent design (Button, Card, Sheet, ScrollArea, etc.)
+- Charts
+  - Recharts used via a reusable `TwoLineChart` wrapper.
