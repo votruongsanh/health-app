@@ -114,3 +114,8 @@ export async function getTopMeals(): Promise<MealItem[]> {
   - shadcn/ui components used for consistent design (Button, Card, Sheet, ScrollArea, etc.)
 - Charts
   - Recharts used via a reusable `TwoLineChart` wrapper.
+
+## 💻 Development Environment
+
+- Node.js >= 18.0.0
+- Recommended: Node 18.20.2 using nvm
