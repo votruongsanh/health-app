@@ -10,7 +10,6 @@ export default function MyRecordPage() {
       <BodyRecordChart />
       <MyExercise />
       <MyDiary />
-      {/* Body Record Chart, My Exercise list, My Diary grid sẽ được thêm tiếp */}
     </div>
   );
 }

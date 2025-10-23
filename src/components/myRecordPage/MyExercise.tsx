@@ -41,7 +41,7 @@ export default function MyExercise() {
   const right = EXERCISES.slice(mid);
 
   return (
-    <section className="mx-auto max-w-6xl px-4">
+    <section className="mx-auto max-w-6xl px-4 py-8">
       <div className="rounded bg-dark-600/95 p-4">
         <div className="mb-2 flex items-end justify-between text-white">
           <div className="text-sm leading-tight">

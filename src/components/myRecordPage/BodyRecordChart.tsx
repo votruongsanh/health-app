@@ -1,10 +1,5 @@
-import { useMemo, useState } from "react";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+import { useState } from "react";
+import TwoLineChart from "@/components/common/TwoLineChart";
 
 type RangeKey = "day" | "week" | "month" | "year";
 
@@ -61,19 +56,10 @@ const LABELS: Record<RangeKey, string> = {
 export default function BodyRecordChart() {
   const [range, setRange] = useState<RangeKey>("year");
 
-  const chartConfig = useMemo(
-    () =>
-      ({
-        weight: { label: "Weight", color: "var(--primary-400)" },
-        bodyFat: { label: "Body fat", color: "var(--secondary-300)" },
-      } as const),
-    []
-  );
-
-  const data = DATA[range];
+  const data = DATA[range as RangeKey];
 
   return (
-    <section className="mx-auto max-w-6xl px-4">
+    <section className="mx-auto max-w-6xl px-4 py-8">
       <div className="rounded bg-dark-600/95 p-4 text-white">
         <div className="mb-2 flex items-end justify-between">
           <div className="text-sm leading-tight">
@@ -82,40 +68,12 @@ export default function BodyRecordChart() {
           </div>
           <div className="text-2xl font-semibold tracking-wide">2021.05.21</div>
         </div>
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-72 w-full bg-transparent"
-        >
-          <LineChart
-            data={data}
-            margin={{ left: 8, right: 8, top: 10, bottom: 8 }}
-          >
-            <CartesianGrid stroke="#555" vertical strokeOpacity={0.5} />
-            <XAxis
-              dataKey="x"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(v) => (range === "year" ? `${v}月` : String(v))}
-            />
-            <YAxis hide domain={[0, "dataMax + 10"]} />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <Line
-              type="monotone"
-              dataKey="weight"
-              stroke="var(--color-weight)"
-              strokeWidth={2}
-              dot
-            />
-            <Line
-              type="monotone"
-              dataKey="bodyFat"
-              stroke="var(--color-bodyFat)"
-              strokeWidth={2}
-              dot
-            />
-          </LineChart>
-        </ChartContainer>
+        <TwoLineChart
+          data={data}
+          xKey="x"
+          xTickFormatter={(v) => (range === "year" ? `${v}月` : String(v))}
+          containerClassName="aspect-auto h-72 w-full bg-transparent"
+        />
 
         {/* Range filters */}
         <div className="mt-3 flex gap-3">

@@ -1,10 +1,5 @@
 import heroImg from "@/assets/images/food/m01.jpg";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+import TwoLineChart from "@/components/common/TwoLineChart";
 
 export default function Achievement() {
   const chartData = [
@@ -22,16 +17,7 @@ export default function Achievement() {
     { m: "5", weight: 51, bodyFat: 15.5 },
   ];
 
-  const chartConfig = {
-    weight: {
-      label: "Weight",
-      color: "var(--primary-400)",
-    },
-    bodyFat: {
-      label: "Body fat",
-      color: "var(--secondary-300)",
-    },
-  } as const;
+  // config is handled inside the reusable chart
 
   return (
     <section className="full-bleed">
@@ -59,57 +45,12 @@ export default function Achievement() {
 
         {/* Right: Chart */}
         <div className="flex h-56 items-center  bg-dark-600/95 p-3 sm:h-64 md:h-72 md:col-span-3">
-          <ChartContainer
-            config={chartConfig}
-            className="aspect-auto h-full w-full rounded-md bg-transparent"
-          >
-            <LineChart
-              data={chartData}
-              margin={{ left: 8, right: 8, top: 10, bottom: 8 }}
-            >
-              <CartesianGrid stroke="#555" vertical strokeOpacity={0.5} />
-              <XAxis
-                dataKey="m"
-                tickLine={false}
-                axisLine={false}
-                tickMargin={8}
-                ticks={[
-                  "6",
-                  "7",
-                  "8",
-                  "9",
-                  "10",
-                  "11",
-                  "12",
-                  "1",
-                  "2",
-                  "3",
-                  "4",
-                  "5",
-                ]}
-                tickFormatter={(v) => `${v}m`}
-              />
-              <YAxis hide domain={[0, "dataMax + 10"]} />
-              <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-
-              <Line
-                type="monotone"
-                dataKey="weight"
-                stroke="var(--color-weight)"
-                strokeWidth={2}
-                dot={false}
-                activeDot={{ r: 3 }}
-              />
-              <Line
-                type="monotone"
-                dataKey="bodyFat"
-                stroke="var(--color-bodyFat)"
-                strokeWidth={2}
-                dot={false}
-                activeDot={{ r: 3 }}
-              />
-            </LineChart>
-          </ChartContainer>
+          <TwoLineChart
+            data={chartData}
+            xKey="m"
+            xTickFormatter={(v) => `${v}月`}
+            containerClassName="aspect-auto h-full w-full rounded-md bg-transparent"
+          />
         </div>
       </div>
     </section>

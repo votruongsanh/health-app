@@ -1,8 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import RootLayout from "./components/layout/RootLayout";
-import TopPage from "./pages/TopPage";
-import MyRecordPage from "./pages/MyRecordPage";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import RootLayout from "./components/common/layout/RootLayout";
 import ColumnPage from "./pages/ColumnPage";
+import MyRecordPage from "./pages/MyRecordPage";
+import TopPage from "./pages/TopPage";
 
 function App() {
   return (

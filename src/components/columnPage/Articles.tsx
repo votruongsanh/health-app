@@ -33,7 +33,7 @@ export default function Articles() {
                 className="h-40 w-full object-cover"
               />
               <div className="label-gradient absolute bottom-0 left-0 px-2 py-0.5 text-xs font-semibold text-black">
-                {a.date}　{a.time}
+                {a.date} {a.time}
               </div>
             </div>
             <CardContent className="px-3 pb-4 pt-3">
